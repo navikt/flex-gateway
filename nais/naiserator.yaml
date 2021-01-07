@@ -40,3 +40,8 @@ spec:
       rules:
         - application: flex-reisetilskudd-backend
         - application: flex-bucket-uploader
+  env:
+  {{#each env}}
+     - name: {{@key}}
+       value: {{this}}
+  {{/each}}
