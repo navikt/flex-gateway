@@ -11,18 +11,5 @@ spring:
   main.banner-mode: 'off'
   profiles:
     active: default
-  cloud:
-    gateway:
-      globalcors:
-        add-to-simple-url-handler-mapping: true
-        cors-configurations:
-          '[/**]':
-            allowed-origins:
-              - "locahost:4545"
-              - "domain.com"
-            allowed-methods:
-              - "*"
-            allowed-headers:
-              - "*"
-            allow-credentials: true
 
+allowed.origins: "localhost:3000,domain.nav.no"

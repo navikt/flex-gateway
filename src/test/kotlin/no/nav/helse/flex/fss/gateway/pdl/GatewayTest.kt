@@ -22,9 +22,6 @@ class GatewayTest {
     @Autowired
     private lateinit var webClient: WebTestClient
 
-    @Autowired
-    private lateinit var globalCorsProperties: GlobalCorsProperties
-
     @Test
     fun testIsAlive() {
         webClient
@@ -135,12 +132,12 @@ class GatewayTest {
 
         webClient
             .post().uri("/flex-bucket-uploader/opplasting")
-            .header("Origin", "domain.com")
+            .header("Origin", "domain.nav.no")
             .header("Host", "www.path.org")
             .exchange()
             .expectStatus().isOk
             .expectHeader().valueEquals("Access-Control-Allow-Credentials", "true")
-            .expectHeader().valueEquals("Access-Control-Allow-Origin", "domain.com")
+            .expectHeader().valueEquals("Access-Control-Allow-Origin", "domain.nav.no")
             .expectBody()
             .jsonPath("$.headers.Hello").isEqualTo("World")
     }
@@ -149,14 +146,24 @@ class GatewayTest {
     fun `cors preflight request`() {
         webClient
             .options().uri("/flex-bucket-uploader/opplasting")
-            .header("Origin", "domain.com")
+            .header("Origin", "domain.nav.no")
             .header("Access-Control-Request-Method", "GET")
             .header("Host", "www.path.org")
             .exchange()
             .expectStatus().isOk
             .expectHeader().valueEquals("Access-Control-Allow-Credentials", "true")
-            .expectHeader().valueEquals("Access-Control-Allow-Origin", "domain.com")
+            .expectHeader().valueEquals("Access-Control-Allow-Origin", "domain.nav.no")
             .expectHeader().valueEquals("Access-Control-Allow-Methods", "GET")
             .expectBody().isEmpty
+    }
+
+    @Test
+    fun `cors request med feil origin returnerer 403`() {
+        webClient
+            .post().uri("/flex-bucket-uploader/opplasting")
+            .header("Origin", "kompromittertside.com")
+            .header("Host", "www.path.org")
+            .exchange()
+            .expectStatus().isForbidden
     }
 }
