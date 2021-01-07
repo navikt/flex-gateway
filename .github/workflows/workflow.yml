@@ -73,7 +73,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais/naiserator.yaml
-          VARS: nais/dev-gcp.json
+          VARS: nais/dev.json
 
   tag-image-as-latest:
     if: github.ref == 'refs/heads/master'
