@@ -10,7 +10,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 @Configuration
 class CorsConfig(@Value("\${allowed.origins}") private val allowedOrigins: String) {
 
-    private val allowedOriginsList: List<String> = allowedOrigins.split(",");
+    private val allowedOriginsList: List<String> = allowedOrigins.split(",")
 
     @Bean
     fun corsWebFilter(): CorsWebFilter? {
@@ -23,5 +23,4 @@ class CorsConfig(@Value("\${allowed.origins}") private val allowedOrigins: Strin
         source.registerCorsConfiguration("/**", corsConfig)
         return CorsWebFilter(source)
     }
-
 }
