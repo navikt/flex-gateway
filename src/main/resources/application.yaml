@@ -1,7 +1,6 @@
 server:
   port: 8080
 
-
 logging.config: "classpath:logback.xml"
 
 flex.bucket.uploader.url: "http://flex-bucket-uploader"
@@ -13,3 +12,11 @@ spring:
     active: default
 
 allowed.origins: "localhost:3000,domain.nav.no"
+
+management:
+  endpoints:
+    web:
+      base-path: /internal
+      path-mapping.prometheus: /prometheus
+      exposure:
+        include: health,gateway,prometheus

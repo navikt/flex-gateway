@@ -25,7 +25,7 @@ class GatewayTest {
     @Test
     fun testIsAlive() {
         webClient
-            .get().uri("/internal/isAlive")
+            .get().uri("/internal/health")
             .exchange()
             .expectStatus().isOk
     }

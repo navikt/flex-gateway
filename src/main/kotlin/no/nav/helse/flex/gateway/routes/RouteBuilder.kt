@@ -24,7 +24,7 @@ class RouteBuilder {
 
                 val pathsMedPrefix = paths.map { "/${service.basepath}$it" }.toTypedArray()
 
-                routes = routes.route { p: PredicateSpec ->
+                routes = routes.route("${service.basepath}-${metode.name}") { p: PredicateSpec ->
                     p.path(*pathsMedPrefix)
                         .and()
                         .method(metode)
