@@ -131,12 +131,12 @@ class GatewayTest {
 
         webClient
             .post().uri("/flex-bucket-uploader/opplasting")
-            .header("Origin", "domain.nav.no")
+            .header("Origin", "http://domain.nav.no")
             .header("Host", "www.path.org")
             .exchange()
             .expectStatus().isOk
             .expectHeader().valueEquals("Access-Control-Allow-Credentials", "true")
-            .expectHeader().valueEquals("Access-Control-Allow-Origin", "domain.nav.no")
+            .expectHeader().valueEquals("Access-Control-Allow-Origin", "http://domain.nav.no")
             .expectBody()
             .jsonPath("$.headers.Hello").isEqualTo("World")
     }
@@ -145,13 +145,13 @@ class GatewayTest {
     fun `cors preflight request`() {
         webClient
             .options().uri("/flex-bucket-uploader/opplasting")
-            .header("Origin", "domain.nav.no")
+            .header("Origin", "http://domain.nav.no")
             .header("Access-Control-Request-Method", "GET")
             .header("Host", "www.path.org")
             .exchange()
             .expectStatus().isOk
             .expectHeader().valueEquals("Access-Control-Allow-Credentials", "true")
-            .expectHeader().valueEquals("Access-Control-Allow-Origin", "domain.nav.no")
+            .expectHeader().valueEquals("Access-Control-Allow-Origin", "http://domain.nav.no")
             .expectHeader().valueEquals("Access-Control-Allow-Methods", "GET")
             .expectBody().isEmpty
     }
@@ -160,7 +160,7 @@ class GatewayTest {
     fun `cors request med feil origin returnerer 403`() {
         webClient
             .post().uri("/flex-bucket-uploader/opplasting")
-            .header("Origin", "kompromittertside.com")
+            .header("Origin", "http://kompromittertside.com")
             .header("Host", "www.path.org")
             .exchange()
             .expectStatus().isForbidden
