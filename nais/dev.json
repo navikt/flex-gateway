@@ -4,6 +4,6 @@
   "team": "flex",
   "ingress": "https://flex-gateway.dev.nav.no",
   "env": {
-    "ALLOWED_ORIGINS": "www-gcp.dev.nav.no,tjenester-q1.nav.no"
+    "ALLOWED_ORIGINS": "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no"
   }
 }

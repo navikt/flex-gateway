@@ -11,7 +11,7 @@ spring:
   profiles:
     active: default
 
-allowed.origins: "localhost:3000,domain.nav.no"
+allowed.origins: "http://localhost:3000,http://domain.nav.no"
 
 management:
   endpoints:
