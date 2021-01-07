@@ -1,0 +1,23 @@
+- basepath: flex-bucket-uploader
+  serviceurlProperty: flex.bucket.uploader.url
+  paths:
+    get:
+      - /list
+      - /kvittering/{blobName}
+    post:
+      - /opplasting
+
+- basepath: flex-reisetilskudd-backend
+  serviceurlProperty: flex.reisetilskudd.backend.url
+  paths:
+    get:
+      - /api/v1/reisetilskudd
+    put:
+      - /api/v1/reisetilskudd/{id}
+    post:
+      - /api/v1/reisetilskudd/{id}/send
+      - /api/v1/reisetilskudd/{id}/avbryt
+      - /api/v1/reisetilskudd/{id}/gjenapne
+      - /api/v1/reisetilskudd/{id}/kvittering
+    delete:
+      - /api/v1/reisetilskudd/{id}/kvittering/{kvitteringId}

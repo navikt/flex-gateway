@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+
+logging.config: "classpath:logback.xml"
+
+flex.bucket.uploader.url: "http://flex-bucket-uploader"
+flex.reisetilskudd.backend.url: "http://flex-reisetilskudd-backend"
+
+spring:
+  main.banner-mode: 'off'
+  profiles:
+    active: default
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowed-origins:
+              - "locahost:4545"
+              - "domain.com"
+            allowed-methods:
+              - "*"
+            allowed-headers:
+              - "*"
+            allow-credentials: true
+
