@@ -5,7 +5,14 @@
   "ingress": "https://flex-gateway.nav.no",
   "minReplicas": 2,
   "maxReplicas": 6,
+  "externalHosts": [
+    "api-gw.oera.no"
+  ],
+  "secrets": [
+    "syfosoknad-gateway-api-gw-apikey"
+  ],
   "env": {
-    "ALLOWED_ORIGINS": "https://www.nav.no,https://tjenester.nav.no"
+    "ALLOWED_ORIGINS": "https://www.nav.no,https://tjenester.nav.no",
+    "SYFOSOKNAD_URL": "https://api-gw.oera.no/syfosoknad"
   }
 }

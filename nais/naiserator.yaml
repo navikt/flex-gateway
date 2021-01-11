@@ -37,10 +37,22 @@ spec:
       memory: 256Mi
   accessPolicy:
     outbound:
+      {{#if externalHosts}}
+      external:
+      {{#each externalHosts as |url|}}
+        - host: {{url}}
+      {{/each}}
+      {{/if}}
       rules:
         - application: flex-reisetilskudd-backend
         - application: flex-bucket-uploader
         - application: spinnsyn-backend
+  {{#if secrets}}
+  envFrom:
+  {{#each secrets as |secret|}}
+    - secret: {{secret}}
+  {{/each}}
+  {{/if}}
   env:
   {{#each env}}
      - name: {{@key}}

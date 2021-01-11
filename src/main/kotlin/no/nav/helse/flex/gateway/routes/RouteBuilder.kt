@@ -20,6 +20,13 @@ class RouteBuilder {
             val uri = env.getProperty(service.serviceurlProperty)
                 ?: throw RuntimeException("Fant ikke property ${service.serviceurlProperty}")
 
+            var serviceGatewayKey: String? = null
+            service.apiGwKeyProperty?.let {
+                env.getProperty(it)?.let { key ->
+                    serviceGatewayKey = key
+                }
+            }
+
             fun addPath(paths: List<String>, metode: HttpMethod) {
 
                 val pathsMedPrefix = paths.map { "/${service.basepath}$it" }.toTypedArray()
@@ -28,7 +35,18 @@ class RouteBuilder {
                     p.path(*pathsMedPrefix)
                         .and()
                         .method(metode)
-                        .filters { f -> f.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}") }
+                        .filters { f ->
+                            val filter = if (service.pathRewrite) {
+                                f.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}")
+                            } else {
+                                f
+                            }
+                            if (serviceGatewayKey != null) {
+                                filter.addRequestHeader("x-nav-apiKey", serviceGatewayKey)
+                            } else {
+                                filter
+                            }
+                        }
                         .uri(uri)
                 }
             }

@@ -31,3 +31,30 @@
       - /api/v1/vedtak/{id}
     post:
       - /api/v1/vedtak/{id}/les
+
+- basepath: syfosoknad
+  serviceurlProperty: syfosoknad.url
+  apiGwKeyProperty: service.gateway.key
+  pathRewrite: false
+  paths:
+    get:
+      - /api/arbeidsgiver/soknader
+      - /api/soknader
+      - /api/sykeforloep
+      - /api/sykmeldinger/{sykmeldingId}/actions/behandlet
+      - /api/sykmeldinger/{sykmeldingId}/actions/erUtenforVentetid
+      - /api/sykmeldinger/{sykmeldingId}/soknader
+      - /api/syfosyketilfelle/39ukersvarsel
+    post:
+      - /api/opprettSoknadUtland
+      - /api/soknader/{id}/send
+      - /api/soknader/{id}/ettersendTilNav
+      - /api/soknader/{id}/ettersendTilArbeidsgiver
+      - /api/soknader/{id}/avbryt
+      - /api/soknader/{id}/gjenapne
+      - /api/soknader/{id}/korriger
+      - /api/soknader/{id}/mottaker
+      - /api/soknader/{id}/finnMottaker
+      - /api/sykmeldinger/{sykmeldingId}/actions/skalOppretteSoknad
+    put:
+      - /api/soknader/{id}/sporsmal/{sporsmalId}
