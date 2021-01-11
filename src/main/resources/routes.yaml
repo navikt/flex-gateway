@@ -21,3 +21,13 @@
       - /api/v1/reisetilskudd/{id}/kvittering
     delete:
       - /api/v1/reisetilskudd/{id}/kvittering/{kvitteringId}
+
+
+- basepath: spinnsyn-backend
+  serviceurlProperty: spinnsyn.backend.url
+  paths:
+    get:
+      - /api/v1/vedtak
+      - /api/v1/vedtak/{id}
+    post:
+      - /api/v1/vedtak/{id}/les

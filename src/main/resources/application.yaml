@@ -5,6 +5,7 @@ logging.config: "classpath:logback.xml"
 
 flex.bucket.uploader.url: "http://flex-bucket-uploader"
 flex.reisetilskudd.backend.url: "http://flex-reisetilskudd-backend"
+spinnsyn.backend.url: "http://spinnsyn-backend"
 
 spring:
   main.banner-mode: 'off'
