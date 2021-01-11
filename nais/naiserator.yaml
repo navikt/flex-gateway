@@ -40,6 +40,7 @@ spec:
       rules:
         - application: flex-reisetilskudd-backend
         - application: flex-bucket-uploader
+        - application: spinnsyn-backend
   env:
   {{#each env}}
      - name: {{@key}}
