@@ -3,6 +3,8 @@
   "namespace": "flex",
   "team": "flex",
   "ingress": "https://flex-gateway.dev.nav.no",
+  "minReplicas": 1,
+  "maxReplicas": 2,
   "env": {
     "ALLOWED_ORIGINS": "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no"
   }
