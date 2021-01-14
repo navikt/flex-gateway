@@ -29,26 +29,27 @@ class RouteBuilder {
 
             fun addPath(paths: List<String>, metode: HttpMethod) {
 
-                val pathsMedPrefix = paths.map { "/${service.basepath}$it" }.toTypedArray()
-
-                routes = routes.route("${service.basepath}-${metode.name}") { p: PredicateSpec ->
-                    p.path(*pathsMedPrefix)
-                        .and()
-                        .method(metode)
-                        .filters { f ->
-                            val filter = if (service.pathRewrite) {
-                                f.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}")
-                            } else {
-                                f
-                            }
-                            if (serviceGatewayKey != null) {
-                                filter.addRequestHeader("x-nav-apiKey", serviceGatewayKey)
-                            } else {
-                                filter
-                            }
+                paths.map { "/${service.basepath}$it" }
+                    .forEach { path ->
+                        routes = routes.route("${metode.name} $path") { p: PredicateSpec ->
+                            p.path(path)
+                                .and()
+                                .method(metode)
+                                .filters { f ->
+                                    val filter = if (service.pathRewrite) {
+                                        f.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}")
+                                    } else {
+                                        f
+                                    }
+                                    if (serviceGatewayKey != null) {
+                                        filter.addRequestHeader("x-nav-apiKey", serviceGatewayKey)
+                                    } else {
+                                        filter
+                                    }
+                                }
+                                .uri(uri)
                         }
-                        .uri(uri)
-                }
+                    }
             }
             addPath(service.paths.delete, HttpMethod.DELETE)
             addPath(service.paths.put, HttpMethod.PUT)
