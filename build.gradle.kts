@@ -30,7 +30,7 @@ repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
 }
 
-val logstashEncoderVersion = "4.10"
+val logstashEncoderVersion = "6.6"
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
