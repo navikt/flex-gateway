@@ -14,6 +14,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
     classes = [Application::class],
     webEnvironment = RANDOM_PORT,
     properties = [
+        "flex.reisetilskudd.backend.url=http://localhost:\${wiremock.server.port}",
         "flex.bucket.uploader.url=http://localhost:\${wiremock.server.port}",
         "syfosoknad.url=http://localhost:\${wiremock.server.port}/syfosoknad",
         "service.gateway.key=husnokkel",
@@ -26,9 +27,45 @@ class GatewayTest {
     private lateinit var webClient: WebTestClient
 
     @Test
-    fun testIsAlive() {
+    fun testHealth() {
         webClient
             .get().uri("/internal/health")
+            .exchange()
+            .expectStatus().isOk
+    }
+
+    @Test
+    fun testIsReadyErIkkeklar() {
+        webClient
+            .get().uri("/internal/isReady")
+            .exchange()
+            .expectStatus().is5xxServerError
+    }
+
+    @Test
+    fun testIsReadyErKlar() {
+        stubFor(
+            get(urlEqualTo("/syfosoknad/api/internal/isAlive"))
+                .withHeader("x-nav-apiKey", EqualToPattern("husnokkel"))
+                .willReturn(
+                    aResponse()
+                        .withBody("{\"headers\":{\"Hello\":\"World\"}}")
+                        .withHeader("Content-Type", "application/json")
+                )
+
+        )
+
+        stubFor(
+            get(urlEqualTo("/internal/isAlive"))
+                .willReturn(
+                    aResponse()
+                        .withBody("{\"headers\":{\"Hello\":\"World\"}}")
+                        .withHeader("Content-Type", "application/json")
+                )
+        )
+
+        webClient
+            .get().uri("/internal/isReady")
             .exchange()
             .expectStatus().isOk
     }

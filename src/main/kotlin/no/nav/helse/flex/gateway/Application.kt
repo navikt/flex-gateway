@@ -12,6 +12,6 @@ fun main(args: Array<String>) {
     runApplication<Application>(*args)
 }
 
-inline fun <reified T> T.log(): Logger {
+inline fun <reified T> T.logger(): Logger {
     return LoggerFactory.getLogger(T::class.java)
 }

@@ -21,7 +21,7 @@ spec:
     periodSeconds: 5
     failureThreshold: 30
   readiness:
-    path: /internal/health
+    path: /internal/isReady
     initialDelay: 30
     periodSeconds: 5
     timeout: 5
