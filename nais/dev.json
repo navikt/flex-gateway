@@ -12,7 +12,7 @@
     "syfosoknad-gateway-api-gw-apikey"
   ],
   "env": {
-    "ALLOWED_ORIGINS": "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no",
+    "ALLOWED_ORIGINS": "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no,https://flex-vedtak-mock.dev.nav.no",
     "SYFOSOKNAD_URL": "https://api-gw-q1.oera.no/syfosoknad"
   }
 }
