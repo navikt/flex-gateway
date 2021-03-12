@@ -15,7 +15,7 @@ const val APPLICATION_NOT_READY = "Application is NOT ready!"
 
 @RestController
 class SelfTestController(
-    @Value("\${flex.reisetilskudd.backend.url}") private val reisetilskuddBackendUrl: String,
+    @Value("\${spinnsyn.backend.url}") private val spinnsynBackendUrl: String,
     @Value("\${syfosoknad.url}") private val syfosoknadUrl: String,
     @Value("\${service.gateway.key}") private val syfosoknadApiGwKey: String,
 ) {
@@ -28,8 +28,8 @@ class SelfTestController(
         .setConnectTimeout(Duration.ofSeconds(1))
         .build()
 
-    fun reisetilskuddBackendErOk(): Boolean {
-        val request = RequestEntity<Any>(HttpMethod.GET, URI("$reisetilskuddBackendUrl/internal/isAlive"))
+    fun spinnsynBackendErOk(): Boolean {
+        val request = RequestEntity<Any>(HttpMethod.GET, URI("$spinnsynBackendUrl/is_alive"))
         val res: ResponseEntity<String> = restTemplate.exchange(request)
         return res.statusCode.is2xxSuccessful
     }
@@ -49,7 +49,7 @@ class SelfTestController(
         }
         try {
 
-            if (reisetilskuddBackendErOk() && syfosoknadErOk()) {
+            if (spinnsynBackendErOk() && syfosoknadErOk()) {
                 log.info("I am ready")
                 ready = true
                 return ResponseEntity.ok(APPLICATION_READY)

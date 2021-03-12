@@ -14,7 +14,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
     classes = [Application::class],
     webEnvironment = RANDOM_PORT,
     properties = [
-        "flex.reisetilskudd.backend.url=http://localhost:\${wiremock.server.port}",
+        "spinnsyn.backend.url=http://localhost:\${wiremock.server.port}",
         "flex.bucket.uploader.url=http://localhost:\${wiremock.server.port}",
         "syfosoknad.url=http://localhost:\${wiremock.server.port}/syfosoknad",
         "service.gateway.key=husnokkel",
@@ -56,7 +56,7 @@ class GatewayTest {
         )
 
         stubFor(
-            get(urlEqualTo("/internal/isAlive"))
+            get(urlEqualTo("/is_alive"))
                 .willReturn(
                     aResponse()
                         .withBody("{\"headers\":{\"Hello\":\"World\"}}")

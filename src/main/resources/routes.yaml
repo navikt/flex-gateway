@@ -7,22 +7,6 @@
     post:
       - /opplasting
 
-- basepath: flex-reisetilskudd-backend
-  serviceurlProperty: flex.reisetilskudd.backend.url
-  paths:
-    get:
-      - /api/v1/reisetilskudd
-    put:
-      - /api/v1/reisetilskudd/{id}/sporsmal/{sporsmalId}
-    post:
-      - /api/v1/reisetilskudd/{id}/send
-      - /api/v1/reisetilskudd/{id}/avbryt
-      - /api/v1/reisetilskudd/{id}/gjenapne
-      - /api/v1/reisetilskudd/{id}/sporsmal/{sporsmalId}/svar
-    delete:
-      - /api/v1/reisetilskudd/{id}/sporsmal/{sporsmalId}/svar/{svarId}
-
-
 - basepath: spinnsyn-backend
   serviceurlProperty: spinnsyn.backend.url
   paths:
@@ -55,6 +39,9 @@
       - /api/soknader/{id}/korriger
       - /api/soknader/{id}/mottaker
       - /api/soknader/{id}/finnMottaker
+      - /api/soknader/{id}/sporsmal/{sporsmalId}/svar
       - /api/sykmeldinger/{sykmeldingId}/actions/skalOppretteSoknad
+    delete:
+      - /api/soknader/{id}/sporsmal/{sporsmalId}/svar/{svarId}
     put:
       - /api/soknader/{id}/sporsmal/{sporsmalId}
