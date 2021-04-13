@@ -28,6 +28,7 @@
       - /api/sykmeldinger/{sykmeldingId}/actions/behandlet
       - /api/sykmeldinger/{sykmeldingId}/actions/behandlet-detaljert
       - /api/sykmeldinger/{sykmeldingId}/actions/erUtenforVentetid
+      - /api/sykmeldinger/{sykmeldingId}/actions/v2/erUtenforVentetid
       - /api/sykmeldinger/{sykmeldingId}/soknader
       - /api/syfosyketilfelle/39ukersvarsel
     post:
