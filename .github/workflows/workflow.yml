@@ -46,6 +46,7 @@ jobs:
       - name: Bygg
         run: ./gradlew bootJar
       - name: Build and publish Docker image
+        if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/dev-')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

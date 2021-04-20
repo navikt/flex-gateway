@@ -2,7 +2,6 @@
   serviceurlProperty: flex.bucket.uploader.url
   paths:
     get:
-      - /list
       - /kvittering/{blobName}
     post:
       - /opplasting
