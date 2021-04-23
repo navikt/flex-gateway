@@ -29,7 +29,7 @@ class SelfTestController(
         .build()
 
     fun spinnsynBackendErOk(): Boolean {
-        val request = RequestEntity<Any>(HttpMethod.GET, URI("$spinnsynBackendUrl/is_alive"))
+        val request = RequestEntity<Any>(HttpMethod.GET, URI("$spinnsynBackendUrl/internal/health"))
         val res: ResponseEntity<String> = restTemplate.exchange(request)
         return res.statusCode.is2xxSuccessful
     }
