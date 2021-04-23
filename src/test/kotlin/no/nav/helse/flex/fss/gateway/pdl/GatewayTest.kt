@@ -56,7 +56,7 @@ class GatewayTest {
         )
 
         stubFor(
-            get(urlEqualTo("/is_alive"))
+            get(urlEqualTo("/internal/health"))
                 .willReturn(
                     aResponse()
                         .withBody("{\"headers\":{\"Hello\":\"World\"}}")
