@@ -10,10 +10,8 @@
   serviceurlProperty: spinnsyn.backend.url
   paths:
     get:
-      - /api/v1/vedtak
       - /api/v2/vedtak
     post:
-      - /api/v1/vedtak/{id}/les
       - /api/v2/vedtak/{id}/les
 
 - basepath: syfosoknad
