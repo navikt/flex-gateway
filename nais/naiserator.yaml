@@ -3,6 +3,8 @@ kind: "Application"
 metadata:
   name: {{app}}
   namespace: {{namespace}}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
   labels:
     team: {{team}}
 spec:
