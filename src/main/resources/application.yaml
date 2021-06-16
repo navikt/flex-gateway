@@ -5,6 +5,7 @@ logging.config: "classpath:logback.xml"
 
 flex.bucket.uploader.url: "http://flex-bucket-uploader"
 spinnsyn.backend.url: "http://spinnsyn-backend"
+pto.proxy.url: "http://pto-proxy.pto"
 
 spring:
   main.banner-mode: 'off'

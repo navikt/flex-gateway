@@ -48,6 +48,8 @@ spec:
       rules:
         - application: flex-bucket-uploader
         - application: spinnsyn-backend
+        - application: pto-proxy
+          namespace: pto
   {{#if secrets}}
   envFrom:
   {{#each secrets as |secret|}}

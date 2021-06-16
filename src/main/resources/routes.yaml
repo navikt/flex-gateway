@@ -45,3 +45,11 @@
       - /api/soknader/{id}/sporsmal/{sporsmalId}/svar/{svarId}
     put:
       - /api/soknader/{id}/sporsmal/{sporsmalId}
+
+- basepath: veilarboppfolging
+  pathPrefix: /proxy/veilarboppfolging
+  serviceurlProperty: pto.proxy.url
+  extractAuthCookie: false
+  paths:
+    get:
+      - /api/oppfolging
