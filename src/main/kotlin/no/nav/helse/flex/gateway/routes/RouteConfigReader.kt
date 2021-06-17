@@ -17,7 +17,7 @@ class RouteConfigReader {
 
         val mapper = ObjectMapper(YAMLFactory()).registerModule(KotlinModule())
 
-        val serviceList: List<Service> = mapper.readValue(this.javaClass.getResourceAsStream("/routes.yaml"))
+        val serviceList: List<Service> = mapper.readValue(this.javaClass.getResourceAsStream("/routes.yaml")!!)
 
         serviceList.forEach { s ->
             val allePaths = ArrayList<String>().also {

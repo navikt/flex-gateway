@@ -1,6 +1,7 @@
 package no.nav.helse.flex.gateway.routes
 
 import org.springframework.cloud.gateway.route.RouteLocator
+import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec
 import org.springframework.cloud.gateway.route.builder.PredicateSpec
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder
 import org.springframework.context.annotation.Bean
@@ -27,6 +28,49 @@ class RouteBuilder {
                 }
             }
 
+            fun GatewayFilterSpec.pathRewite(): GatewayFilterSpec {
+                return if (service.pathRewrite) {
+                    this.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}")
+                } else {
+                    this
+                }
+            }
+
+            fun GatewayFilterSpec.gatewayKey(): GatewayFilterSpec {
+                return if (serviceGatewayKey != null) {
+                    this.addRequestHeader("x-nav-apiKey", serviceGatewayKey)
+                } else {
+                    this
+                }
+            }
+
+            fun GatewayFilterSpec.pathPrefix(): GatewayFilterSpec {
+                return if (service.pathPrefix != null) {
+                    this.prefixPath(service.pathPrefix)
+                } else {
+                    this
+                }
+            }
+
+            fun GatewayFilterSpec.cookieMonster(): GatewayFilterSpec {
+                return if (service.extractAuthCookie) {
+
+                    this.filter { exchange, chain ->
+                        val httpCookie = exchange.request.cookies.getFirst("selvbetjening-idtoken")
+                        if (httpCookie != null) {
+                            val mutertRequest =
+                                exchange.request.mutate().header("Authorization", "Bearer ${httpCookie.value}")
+                                    .build()
+                            chain.filter(exchange.mutate().request(mutertRequest).build())
+                        } else {
+                            chain.filter(exchange)
+                        }
+                    }
+                } else {
+                    this
+                }
+            }
+
             fun addPath(paths: List<String>, metode: HttpMethod) {
 
                 paths.map { "/${service.basepath}$it" }
@@ -36,16 +80,7 @@ class RouteBuilder {
                                 .and()
                                 .method(metode)
                                 .filters { f ->
-                                    val filter = if (service.pathRewrite) {
-                                        f.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}")
-                                    } else {
-                                        f
-                                    }
-                                    if (serviceGatewayKey != null) {
-                                        filter.addRequestHeader("x-nav-apiKey", serviceGatewayKey)
-                                    } else {
-                                        filter
-                                    }
+                                    f.pathRewite().gatewayKey().pathPrefix().cookieMonster()
                                 }
                                 .uri(uri)
                         }

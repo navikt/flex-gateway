@@ -1,8 +1,7 @@
-package no.nav.helse.flex.fss.gateway.pdl
+package no.nav.helse.flex.gateway
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.matching.EqualToPattern
-import no.nav.helse.flex.gateway.Application
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -16,6 +15,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
     properties = [
         "spinnsyn.backend.url=http://localhost:\${wiremock.server.port}",
         "flex.bucket.uploader.url=http://localhost:\${wiremock.server.port}",
+        "pto.proxy.url=http://localhost:\${wiremock.server.port}",
         "syfosoknad.url=http://localhost:\${wiremock.server.port}/syfosoknad",
         "service.gateway.key=husnokkel",
     ]
@@ -221,6 +221,25 @@ class GatewayTest {
 
         webClient
             .get().uri("/syfosoknad/api/soknader")
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .jsonPath("$.headers.Hello").isEqualTo("World")
+    }
+
+    @Test
+    fun `ok veilarboppfolging kall videresendes`() {
+        stubFor(
+            get(urlEqualTo("/proxy/veilarboppfolging/api/oppfolging"))
+                .willReturn(
+                    aResponse()
+                        .withBody("{\"headers\":{\"Hello\":\"World\"}}")
+                        .withHeader("Content-Type", "application/json")
+                )
+        )
+
+        webClient
+            .get().uri("/veilarboppfolging/api/oppfolging")
             .exchange()
             .expectStatus().isOk
             .expectBody()

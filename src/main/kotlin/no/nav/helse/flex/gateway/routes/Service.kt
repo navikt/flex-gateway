@@ -5,7 +5,9 @@ data class Service(
     val basepath: String,
     val serviceurlProperty: String,
     val apiGwKeyProperty: String?,
-    val pathRewrite: Boolean = true
+    val pathPrefix: String? = null,
+    val pathRewrite: Boolean = true,
+    val extractAuthCookie: Boolean = true
 )
 
 data class Paths(
