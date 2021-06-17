@@ -13,7 +13,7 @@ class CorsConfig(@Value("\${allowed.origins}") private val allowedOrigins: Strin
     private val allowedOriginsList: List<String> = allowedOrigins.split(",")
 
     @Bean
-    fun corsWebFilter(): CorsWebFilter? {
+    fun corsWebFilter(): CorsWebFilter {
         val corsConfig = CorsConfiguration()
         corsConfig.allowedOrigins = allowedOriginsList
         corsConfig.allowCredentials = true

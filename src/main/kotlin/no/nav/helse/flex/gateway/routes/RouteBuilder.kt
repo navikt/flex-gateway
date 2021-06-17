@@ -71,6 +71,13 @@ class RouteBuilder {
                 }
             }
 
+            fun GatewayFilterSpec.fjernCorsFraRequest(): GatewayFilterSpec {
+                return this
+                    .removeRequestHeader("origin")
+                    .removeRequestHeader("host")
+                    .removeRequestHeader("sec-fetch-mode")
+            }
+
             fun addPath(paths: List<String>, metode: HttpMethod) {
 
                 paths.map { "/${service.basepath}$it" }
@@ -80,7 +87,7 @@ class RouteBuilder {
                                 .and()
                                 .method(metode)
                                 .filters { f ->
-                                    f.pathRewite().gatewayKey().pathPrefix().cookieMonster()
+                                    f.pathRewite().gatewayKey().pathPrefix().cookieMonster().fjernCorsFraRequest()
                                 }
                                 .uri(uri)
                         }
