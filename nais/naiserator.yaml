@@ -50,6 +50,8 @@ spec:
         - application: spinnsyn-backend
         - application: pto-proxy
           namespace: pto
+        - application: isdialogmote
+          namespace: teamsykefravr
   {{#if secrets}}
   envFrom:
   {{#each secrets as |secret|}}
