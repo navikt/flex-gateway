@@ -20,6 +20,12 @@
     get:
       - /api/v1/arbeidstaker/brev
 
+- basepath: flex-syketilfelle
+  serviceurlProperty: flex.syketilfelle.url
+  paths:
+    get:
+      - /api/bruker/v1/sykeforloep
+
 - basepath: syfosoknad
   serviceurlProperty: syfosoknad.url
   apiGwKeyProperty: service.gateway.key

@@ -48,6 +48,7 @@ spec:
       rules:
         - application: flex-bucket-uploader
         - application: spinnsyn-backend
+        - application: flex-syketilfelle
         - application: pto-proxy
           namespace: pto
         - application: isdialogmote
