@@ -112,7 +112,6 @@ class GatewayTest {
     fun `500 kall videresendes`() {
         stubFor(
             post(urlEqualTo("/opplasting"))
-
                 .willReturn(
                     aResponse()
                         .withBody("{\"headers\":{\"Hello\":\"World\"}}")
@@ -145,7 +144,6 @@ class GatewayTest {
                 .willReturn(
                     aResponse()
                         .withBody("{\"headers\":{\"Hello\":\"World\"}}")
-
                         .withHeader("Content-Type", "application/json")
                 )
         )

@@ -13,7 +13,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'zulu'
-          java-version: '16'
+          java-version: '17'
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Generer versjon og image navn
@@ -25,14 +25,14 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
       - run: echo $VERSION > VERSION.txt
       - name: Last opp VERSION til neste job
-        uses: actions/upload-artifact@v2.2.3
+        uses: actions/upload-artifact@v2
         with:
           name: VERSION.txt
           path: VERSION.txt
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
       - name: Setup gradle dependency cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
@@ -64,7 +64,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
       - name: Last ned versjon
-        uses: actions/download-artifact@v2.0.9
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
@@ -87,7 +87,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Download VERSION-artifact
-        uses: actions/download-artifact@v2.0.9
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
@@ -108,7 +108,7 @@ jobs:
     needs: build-and-publish
     steps:
       - name: Last ned versjon
-        uses: actions/download-artifact@v2.0.9
+        uses: actions/download-artifact@v2
         with:
           name: VERSION.txt
           path: .
