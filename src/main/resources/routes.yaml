@@ -25,6 +25,7 @@
   paths:
     get:
       - /api/bruker/v1/sykeforloep
+      - /api/bruker/v1/ventetid/{sykmeldingId}/erUtenforVentetid
 
 - basepath: syfosoknad
   serviceurlProperty: syfosoknad.url
