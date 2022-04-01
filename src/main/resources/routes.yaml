@@ -52,6 +52,12 @@
     put:
       - /api/soknader/{id}/sporsmal/{sporsmalId}
 
+- basepath: sykepengesoknad-backend
+  serviceurlProperty: sykepengesoknad.backend.url
+  paths:
+    get:
+      - /api/soknader
+
 - basepath: veilarboppfolging
   pathPrefix: /proxy/veilarboppfolging
   serviceurlProperty: pto.proxy.url
