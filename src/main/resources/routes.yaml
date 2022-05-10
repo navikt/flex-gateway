@@ -43,7 +43,6 @@
       - /api/soknader/{id}/avbryt
       - /api/soknader/{id}/gjenapne
       - /api/soknader/{id}/korriger
-      - /api/soknader/{id}/mottaker
       - /api/soknader/{id}/finnMottaker
       - /api/soknader/{id}/sporsmal/{sporsmalId}/svar
       - /api/sykmeldinger/{sykmeldingId}/actions/skalOppretteSoknad
@@ -57,6 +56,21 @@
   paths:
     get:
       - /api/soknader
+    post:
+      - /api/opprettSoknadUtland
+      - /api/soknader/{id}/send
+      - /api/soknader/{id}/ettersendTilNav
+      - /api/soknader/{id}/ettersendTilArbeidsgiver
+      - /api/soknader/{id}/avbryt
+      - /api/soknader/{id}/gjenapne
+      - /api/soknader/{id}/korriger
+      - /api/soknader/{id}/finnMottaker
+      - /api/soknader/{id}/sporsmal/{sporsmalId}/svar
+      - /api/sykmeldinger/{sykmeldingId}/actions/skalOppretteSoknad
+    delete:
+      - /api/soknader/{id}/sporsmal/{sporsmalId}/svar/{svarId}
+    put:
+      - /api/soknader/{id}/sporsmal/{sporsmalId}
 
 - basepath: veilarboppfolging
   pathPrefix: /proxy/veilarboppfolging
