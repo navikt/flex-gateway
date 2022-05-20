@@ -21,27 +21,8 @@ class RouteBuilder {
             val uri = env.getProperty(service.serviceurlProperty)
                 ?: throw RuntimeException("Fant ikke property ${service.serviceurlProperty}")
 
-            var serviceGatewayKey: String? = null
-            service.apiGwKeyProperty?.let {
-                env.getProperty(it)?.let { key ->
-                    serviceGatewayKey = key
-                }
-            }
-
             fun GatewayFilterSpec.pathRewite(): GatewayFilterSpec {
-                return if (service.pathRewrite) {
-                    this.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}")
-                } else {
-                    this
-                }
-            }
-
-            fun GatewayFilterSpec.gatewayKey(): GatewayFilterSpec {
-                return if (serviceGatewayKey != null) {
-                    this.addRequestHeader("x-nav-apiKey", serviceGatewayKey)
-                } else {
-                    this
-                }
+                return this.rewritePath("/${service.basepath}(?<segment>/?.*)", "\$\\{segment}")
             }
 
             fun GatewayFilterSpec.pathPrefix(): GatewayFilterSpec {
@@ -87,7 +68,7 @@ class RouteBuilder {
                                 .and()
                                 .method(metode)
                                 .filters { f ->
-                                    f.pathRewite().gatewayKey().pathPrefix().cookieMonster().fjernCorsFraRequest()
+                                    f.pathRewite().pathPrefix().cookieMonster().fjernCorsFraRequest()
                                 }
                                 .uri(uri)
                         }

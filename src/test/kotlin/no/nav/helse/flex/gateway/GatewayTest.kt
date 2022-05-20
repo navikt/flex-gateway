@@ -16,8 +16,6 @@ import org.springframework.test.web.reactive.server.WebTestClient
         "spinnsyn.backend.url=http://localhost:\${wiremock.server.port}",
         "flex.bucket.uploader.url=http://localhost:\${wiremock.server.port}",
         "pto.proxy.url=http://localhost:\${wiremock.server.port}",
-        "syfosoknad.url=http://localhost:\${wiremock.server.port}/syfosoknad",
-        "service.gateway.key=husnokkel",
     ]
 )
 @AutoConfigureWireMock(port = 0)
@@ -44,17 +42,6 @@ class GatewayTest {
 
     @Test
     fun testIsReadyErKlar() {
-        stubFor(
-            get(urlEqualTo("/syfosoknad/api/internal/isAlive"))
-                .withHeader("x-nav-apiKey", EqualToPattern("husnokkel"))
-                .willReturn(
-                    aResponse()
-                        .withBody("{\"headers\":{\"Hello\":\"World\"}}")
-                        .withHeader("Content-Type", "application/json")
-                )
-
-        )
-
         stubFor(
             get(urlEqualTo("/internal/health"))
                 .willReturn(
@@ -203,26 +190,6 @@ class GatewayTest {
             .header("Host", "www.path.org")
             .exchange()
             .expectStatus().isForbidden
-    }
-
-    @Test
-    fun `api gw key legges på`() {
-        stubFor(
-            get(urlEqualTo("/syfosoknad/api/soknader"))
-                .withHeader("x-nav-apiKey", EqualToPattern("husnokkel"))
-                .willReturn(
-                    aResponse()
-                        .withBody("{\"headers\":{\"Hello\":\"World\"}}")
-                        .withHeader("Content-Type", "application/json")
-                )
-        )
-
-        webClient
-            .get().uri("/syfosoknad/api/soknader")
-            .exchange()
-            .expectStatus().isOk
-            .expectBody()
-            .jsonPath("$.headers.Hello").isEqualTo("World")
     }
 
     @Test
