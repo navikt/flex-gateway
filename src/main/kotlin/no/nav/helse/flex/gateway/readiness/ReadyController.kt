@@ -16,8 +16,6 @@ const val APPLICATION_NOT_READY = "Application is NOT ready!"
 @RestController
 class SelfTestController(
     @Value("\${spinnsyn.backend.url}") private val spinnsynBackendUrl: String,
-    @Value("\${syfosoknad.url}") private val syfosoknadUrl: String,
-    @Value("\${service.gateway.key}") private val syfosoknadApiGwKey: String,
 ) {
 
     var ready = false
@@ -34,14 +32,6 @@ class SelfTestController(
         return res.statusCode.is2xxSuccessful
     }
 
-    fun syfosoknadErOk(): Boolean {
-        val headers = HttpHeaders()
-        headers.set("x-nav-apiKey", syfosoknadApiGwKey)
-        val request = RequestEntity<Any>(headers, HttpMethod.GET, URI("$syfosoknadUrl/api/internal/isAlive"))
-        val res: ResponseEntity<String> = restTemplate.exchange(request)
-        return res.statusCode.is2xxSuccessful
-    }
-
     @GetMapping("/internal/isReady", produces = [MediaType.TEXT_PLAIN_VALUE])
     fun isReady(): ResponseEntity<String> {
         if (ready) {
@@ -49,7 +39,7 @@ class SelfTestController(
         }
         try {
 
-            if (spinnsynBackendErOk() && syfosoknadErOk()) {
+            if (spinnsynBackendErOk()) {
                 log.info("I am ready")
                 ready = true
                 return ResponseEntity.ok(APPLICATION_READY)

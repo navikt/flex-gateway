@@ -5,14 +5,7 @@
   "ingress": "https://flex-gateway.dev.nav.no",
   "minReplicas": 2,
   "maxReplicas": 3,
-  "externalHosts": [
-    "api-gw-q1.oera.no"
-  ],
-  "secrets": [
-    "syfosoknad-gateway-api-gw-apikey"
-  ],
   "env": {
-    "ALLOWED_ORIGINS": "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no,https://flex-vedtak-mock.dev.nav.no",
-    "SYFOSOKNAD_URL": "https://api-gw-q1.oera.no/syfosoknad"
+    "ALLOWED_ORIGINS": "https://www-gcp.dev.nav.no,https://tjenester-q1.nav.no,https://flex-vedtak-mock.dev.nav.no"
   }
 }
