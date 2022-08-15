@@ -4,9 +4,6 @@ server:
 logging.config: "classpath:logback.xml"
 
 flex.bucket.uploader.url: "http://flex-bucket-uploader"
-spinnsyn.backend.url: "http://spinnsyn-backend"
-sykepengesoknad.backend.url: "http://sykepengesoknad-backend"
-flex.syketilfelle.url: "http://flex-syketilfelle"
 pto.proxy.url: "http://pto-proxy.pto"
 isdialogmote.url: "http://isdialogmote.teamsykefravr"
 
