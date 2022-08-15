@@ -13,7 +13,6 @@ import org.springframework.test.web.reactive.server.WebTestClient
     classes = [Application::class],
     webEnvironment = RANDOM_PORT,
     properties = [
-        "spinnsyn.backend.url=http://localhost:\${wiremock.server.port}",
         "flex.bucket.uploader.url=http://localhost:\${wiremock.server.port}",
         "pto.proxy.url=http://localhost:\${wiremock.server.port}",
     ]
@@ -33,23 +32,7 @@ class GatewayTest {
     }
 
     @Test
-    fun testIsReadyErIkkeklar() {
-        webClient
-            .get().uri("/internal/isReady")
-            .exchange()
-            .expectStatus().is5xxServerError
-    }
-
-    @Test
     fun testIsReadyErKlar() {
-        stubFor(
-            get(urlEqualTo("/internal/health"))
-                .willReturn(
-                    aResponse()
-                        .withBody("{\"headers\":{\"Hello\":\"World\"}}")
-                        .withHeader("Content-Type", "application/json")
-                )
-        )
 
         webClient
             .get().uri("/internal/isReady")
