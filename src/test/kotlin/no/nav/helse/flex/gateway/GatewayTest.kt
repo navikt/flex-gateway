@@ -13,7 +13,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
     classes = [Application::class],
     webEnvironment = RANDOM_PORT,
     properties = [
-        "flex.bucket.uploader.url=http://localhost:\${wiremock.server.port}",
+        "isdialogmote.url=http://localhost:\${wiremock.server.port}",
         "pto.proxy.url=http://localhost:\${wiremock.server.port}",
     ]
 )
@@ -43,7 +43,7 @@ class GatewayTest {
     @Test
     fun `ok kall videresendes`() {
         stubFor(
-            post(urlEqualTo("/opplasting"))
+            get(urlEqualTo("/api/v1/arbeidstaker/brev"))
                 .willReturn(
                     aResponse()
                         .withBody("{\"headers\":{\"Hello\":\"World\"}}")
@@ -52,26 +52,7 @@ class GatewayTest {
         )
 
         webClient
-            .post().uri("/flex-bucket-uploader/opplasting")
-            .exchange()
-            .expectStatus().isOk
-            .expectBody()
-            .jsonPath("$.headers.Hello").isEqualTo("World")
-    }
-
-    @Test
-    fun `ok kall videresendes med path parameter`() {
-        stubFor(
-            get(urlEqualTo("/kvittering/1234"))
-                .willReturn(
-                    aResponse()
-                        .withBody("{\"headers\":{\"Hello\":\"World\"}}")
-                        .withHeader("Content-Type", "application/json")
-                )
-        )
-
-        webClient
-            .get().uri("/flex-bucket-uploader/kvittering/1234")
+            .get().uri("/isdialogmote/api/v1/arbeidstaker/brev")
             .exchange()
             .expectStatus().isOk
             .expectBody()
@@ -81,7 +62,7 @@ class GatewayTest {
     @Test
     fun `500 kall videresendes`() {
         stubFor(
-            post(urlEqualTo("/opplasting"))
+            get(urlEqualTo("/api/v1/arbeidstaker/brev"))
                 .willReturn(
                     aResponse()
                         .withBody("{\"headers\":{\"Hello\":\"World\"}}")
@@ -91,7 +72,7 @@ class GatewayTest {
         )
 
         webClient
-            .post().uri("/flex-bucket-uploader/opplasting")
+            .get().uri("/isdialogmote/api/v1/arbeidstaker/brev")
             .exchange()
             .expectStatus().is5xxServerError
             .expectBody()
@@ -101,7 +82,7 @@ class GatewayTest {
     @Test
     fun `ukjent api returnerer 404`() {
         webClient
-            .post().uri("/dfgasdyfghuadsfgliuafdg")
+            .get().uri("/dfgasdyfghuadsfgliuafdg")
             .exchange()
             .expectStatus().isNotFound
     }
@@ -109,7 +90,7 @@ class GatewayTest {
     @Test
     fun `selvbetjening cookie flyttes til auth header`() {
         stubFor(
-            post(urlEqualTo("/opplasting"))
+            get(urlEqualTo("/api/v1/arbeidstaker/brev"))
                 .withHeader("Authorization", EqualToPattern("Bearer napoleonskake"))
                 .willReturn(
                     aResponse()
@@ -119,7 +100,7 @@ class GatewayTest {
         )
 
         webClient
-            .post().uri("/flex-bucket-uploader/opplasting")
+            .get().uri("/isdialogmote/api/v1/arbeidstaker/brev")
             .cookie("selvbetjening-idtoken", "napoleonskake")
             .exchange()
             .expectStatus().isOk
@@ -130,7 +111,7 @@ class GatewayTest {
     @Test
     fun `cors request`() {
         stubFor(
-            post(urlEqualTo("/opplasting"))
+            get(urlEqualTo("/api/v1/arbeidstaker/brev"))
                 .willReturn(
                     aResponse()
                         .withBody("{\"headers\":{\"Hello\":\"World\"}}")
@@ -139,7 +120,7 @@ class GatewayTest {
         )
 
         webClient
-            .post().uri("/flex-bucket-uploader/opplasting")
+            .get().uri("/isdialogmote/api/v1/arbeidstaker/brev")
             .header("Origin", "http://domain.nav.no")
             .header("Host", "www.path.org")
             .exchange()
@@ -153,7 +134,7 @@ class GatewayTest {
     @Test
     fun `cors preflight request`() {
         webClient
-            .options().uri("/flex-bucket-uploader/opplasting")
+            .options().uri("/isdialogmote/api/v1/arbeidstaker/brev")
             .header("Origin", "http://domain.nav.no")
             .header("Access-Control-Request-Method", "GET")
             .header("Host", "www.path.org")
@@ -168,7 +149,7 @@ class GatewayTest {
     @Test
     fun `cors request med feil origin returnerer 403`() {
         webClient
-            .post().uri("/flex-bucket-uploader/opplasting")
+            .get().uri("/isdialogmote/api/v1/arbeidstaker/brev")
             .header("Origin", "http://kompromittertside.com")
             .header("Host", "www.path.org")
             .exchange()

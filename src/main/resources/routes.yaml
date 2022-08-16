@@ -1,12 +1,3 @@
-- basepath: flex-bucket-uploader
-  serviceurlProperty: flex.bucket.uploader.url
-  paths:
-    get:
-      - /kvittering/{blobName}
-    post:
-      - /opplasting
-
-
 - basepath: isdialogmote
   serviceurlProperty: isdialogmote.url
   paths:
