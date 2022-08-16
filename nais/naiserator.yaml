@@ -40,7 +40,6 @@ spec:
   accessPolicy:
     outbound:
       rules:
-        - application: flex-bucket-uploader
         - application: pto-proxy
           namespace: pto
         - application: isdialogmote
